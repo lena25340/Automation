@@ -1,4 +1,4 @@
 age = 22
-age =26
+age = age+ 3
 
 print(age)
