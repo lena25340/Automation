@@ -4,4 +4,3 @@ if (is_year_leap % 4 ==0):
     print( "год" + i + "True")
 else:
     print("год" + i + "False")
-
