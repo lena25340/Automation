@@ -1,4 +1,4 @@
-from Lesson_3.user import User
+from Lesson_3.user1 import User
 
 my_user = User("Lena", "Grisihina")
 my_user.sayName()

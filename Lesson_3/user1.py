@@ -8,6 +8,6 @@ class User:
 
     def saylast_name(self):
         print(self.last)
-        
+
     def sayfirstlast_name(self):
         print(self.Name, self.last)
