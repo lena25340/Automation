@@ -1,5 +1,5 @@
 import pytest
-from string_utils import StringUtils
+from lesson_4.string_utils1 import StringUtils
 
 utils = StringUtils()
 
@@ -27,6 +27,16 @@ def test_Negatives_capitilize():
      {"%?№;", "%?№;"},
      {"0", "0"}
 ])
-def test_capitalize(string, symbol, result):
+def test_positive_capitalize(string, symbol, result):
+    res = utils.capitilize(string)
+    assert res == result
+
+
+@pytest.mark.parametrize("input_str, expected_result", [
+     {"", ""},
+     {"🤗🤗🤗", "🤗🤗🤗"},
+     {"لائكتي", "لائكتي"}
+])
+def test_Negatives_capitalize(string, symbol, result):
     res = utils.capitilize(string)
     assert res == result
