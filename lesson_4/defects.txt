@@ -1,0 +1,1 @@
+1. Ошибка _capitalize: in "parametrize" the number of names (2)
