@@ -1,4 +1,3 @@
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -6,8 +5,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from time import sleep
 
 
-def test_data_types_form (driver):
-    driver = webdriver.Chrome()
+
+def test_data_types_form(driver):
     driver.get("https://bonigarcia.dev/selenium-webdriver-java/data-types.html")
     driver.find_element(By.NAME, "first-name").send_keys("Иван")
     driver.find_element(By.NAME, "last-name").send_keys("Петров")
@@ -24,7 +23,7 @@ def test_data_types_form (driver):
         EC. element_to_be_clickable ((By.TAG_NAME, "button"))).click()
     sleep (2)
 
-    assert "danger" in driver.find_element(By.ID, "zip-code").get_attribute("class")
+    assert "danger" in  driver.find_element(By.ID, "zip-code").get_attribute("class")
     assert "success" in driver.find_element(By.ID, "first-name").get_attribute("class")
     assert "success" in driver.find_element(By.ID, "last-name").get_attribute("class")
     assert "success" in driver.find_element(By.ID, "address").get_attribute("class")
