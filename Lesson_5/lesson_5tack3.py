@@ -1,15 +1,16 @@
 from selenium import webdriver
-from time import sleep
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 driver = webdriver.Chrome()
-driver.get ("http://uitestingplayground.com/classattr")
-
-for i in range(3):
-    blue_button=driver.find_element (
-        "xpath","//button[contains(concat(' ', normalize-space(@class), ' '), ' btn-primary ')]")
-    blue_button.click()
-    sleep(2)
-    driver.switch_to.alert.accept()
+wait = WebDriverWait(driver, 40, 0.1)
 
 
+driver.get('https://bonigarcia.dev/selenium-webdriver-java/loading-images.html')
+wait.until (EC.text_to_be_present_in_element((By.ID, "text"), 'Done!'))
+get_attribute = driver.find_element (By.ID,'award').get_attribute('src')
+print(get_attribute)
+
+driver.quit()
     
