@@ -3,7 +3,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-def test_calculator_form (driver):
+def test_calculator_form(driver):
     driver.get("https://bonigarcia.dev/selenium-webdriver-java/slow-calculator.html")
     delay_input= driver.find_element(By.ID, "delay")
     delay_input.clear()
@@ -14,7 +14,7 @@ def test_calculator_form (driver):
     driver.find_element(By.XPATH, "//span[text() = '8']"). click()
     driver.find_element(By.XPATH, "//span[text() = '=']"). click()
     
-    result = WebDriverWait (driver, 46).until(EC.text_to_be_present_in_element((By.CLASS_NAME, "screen"), "15"))
+    result = WebDriverWait(driver, 46).until(EC.text_to_be_present_in_element((By.CLASS_NAME, "screen"), "15"))
     result_text= driver.find_element(By.CLASS_NAME, "screen").text
 
     assert result_text == "15"
