@@ -3,8 +3,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 
 class ShopContainer:
-    def __init__(self,browser):
-        self.browser = browser
+    def __init__(self, driver):
+        self.browser = driver
 
     def checkout (self):
         self.check = (By.ID,"checkout")

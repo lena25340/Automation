@@ -1,8 +1,8 @@
 from selenium.webdriver.common.by import By
 
 class DataFild:
-    def __init__(self, browser):
-        self.browser = browser
+    def __init__(self, driver):
+        self.browser = driver
 
     def find_fields (self):
         self.class_first_name = (By.ID, "first-name")

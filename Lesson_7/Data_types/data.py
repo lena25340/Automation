@@ -4,9 +4,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
 class MainPage:
-    def __init__(self, browser):
-        self.browser = browser
-        self.browser.get("https://bonigarcia.dev/selenium-webdriver-java/data-types.html")
+    def __init__(self, driver):
+        self.driver = driver
+        self.driver.get("https://bonigarcia.dev/selenium-webdriver-java/data-types.html")
 
     def find_fields(self):
         self._first_name = (By.NAME, "first-name")
@@ -22,22 +22,22 @@ class MainPage:
         self._button = (By.TAG_NAME, "button")
 
     def filling_in_the_field (self):
-        self.browser.find_element(*self._first_name).send_keys("Иван")
-        self.browser.find_element(*self._last_name).send_keys("Петров")
-        self.browser.find_element(*self._address).send_keys("Ленина, 55-3")
-        self.browser.find_element(*self._email).send_keys("test@skypro.com")
-        self.browser.find_element(*self._phone).send_keys("+7985899998787")
-        self.browser.find_element(*self._zip_code).send_keys("")
-        self.browser.find_element(*self._city).send_keys("Москва")
-        self.browser.find_element(*self._country).send_keys ("Россия")
-        self.browser.find_element(*self._job_position).send_keys("QA")
-        self.browser.find_element(*self._company).send_keys("SkyPro")
+        self.driver.find_element(*self._first_name).send_keys("Иван")
+        self.driver.find_element(*self._last_name).send_keys("Петров")
+        self.driver.find_element(*self._address).send_keys("Ленина, 55-3")
+        self.driver.find_element(*self._email).send_keys("test@skypro.com")
+        self.driver.find_element(*self._phone).send_keys("+7985899998787")
+        self.driver.find_element(*self._zip_code).send_keys("")
+        self.driver.find_element(*self._city).send_keys("Москва")
+        self.driver.find_element(*self._country).send_keys ("Россия")
+        self.driver.find_element(*self._job_position).send_keys("QA")
+        self.driver.find_element(*self._company).send_keys("SkyPro")
 
     def click_submit_button(self):
         while True:
-            self.browser.find_element(By.TAG_NAME, "body").send_keys(Keys.PAGE_DOWN)
+            self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.PAGE_DOWN)
             try:
-                WebDriverWait(self.browser, 40, 0.1).until(EC.element_to_be_clickable(self._button)).click()
+                WebDriverWait(self.driver, 40, 0.1).until(EC.element_to_be_clickable(self._button)).click()
                 break
             except:
                 pass

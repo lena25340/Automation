@@ -1,8 +1,9 @@
 from selenium.webdriver.common.by import By
 
 class ShopmainPage:
-    def __init__(self, browser):
-        self.browser = browser
+    def __init__(self, driver):
+        self.browser = driver
+        
         self.browser.get( "https://www.saucedemo.com")
 
     def regisration_fieds(self):

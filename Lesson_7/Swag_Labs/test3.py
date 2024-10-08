@@ -1,16 +1,16 @@
-from Lesson_7.Swag_Labs.Shopmain import ShopmainPage
-from Lesson_7.Swag_Labs.Shopcontainer import ShopContainer
+from Lesson_7.Shopmain import ShopmainPage
+from Lesson_7.Shopcontainer import ShopContainer
 
-def test_shop (chrome_browser):
+def test_shop (driver):
     expected_total = "58.29"
 
-    shopmain = ShopmainPage(chrome_browser)
+    shopmain = ShopmainPage(driver)
     shopmain.regisration_fieds()
     shopmain.buy_issue()
     shopmain.click_issue()
     shopmain.info_container()
 
-    container = ShopContainer (chrome_browser)
+    container = ShopContainer (driver)
     container.checkout()
     container.info()
     container.price()
