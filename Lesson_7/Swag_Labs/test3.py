@@ -1,5 +1,5 @@
 from Lesson_7.Shopmain import ShopmainPage
-from Lesson_7.Shopcontainer import ShopContainer
+from Lesson_7.Shopcontainer import Shopcontainer
 
 def test_shop (driver):
     expected_total = "58.29"
@@ -10,7 +10,7 @@ def test_shop (driver):
     shopmain.click_issue()
     shopmain.info_container()
 
-    container = ShopContainer (driver)
+    container = Shopcontainer (driver)
     container.checkout()
     container.info()
     container.price()
