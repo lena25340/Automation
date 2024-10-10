@@ -4,7 +4,7 @@ class ShopmainPage:
     def __init__(self, driver):
         self.browser = driver
         
-        self.browser.get( "https://www.saucedemo.com")
+        self.browser.get("https://www.saucedemo.com")
 
     def regisration_fieds(self):
         self._name = (By.ID, "user-name")
