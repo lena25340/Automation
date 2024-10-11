@@ -1,8 +1,16 @@
 from Lesson_7.Shopmain import ShopmainPage
-from Lesson_7.Shopcontainer import ShopContainer
+from Lesson_7.Shopcontainer import Shopcontainer
 
-def test_shop (driver):
-    expected_total = "58.29"
+
+     def regisration_fieds(self):
+        self._name = (By.ID, "user-name")
+        self._pass = (By.ID, "password")
+        self._log_button = (By.ID, "login-button")
+        
+
+        self.browser.find_element(*self._name).send_keys("standard_user")
+        self.browser.find_element(*self._pass).send_keys("secret_sauce")
+        self.browser.find_element(*self._log_button).click()
 
     shopmain = ShopmainPage(driver)
     shopmain.regisration_fieds()
@@ -16,3 +24,4 @@ def test_shop (driver):
     container.price()
     assert expected_total in container.price()
     print (f"Итоговая сумма равна ${container.price()}")
+    expected_total = "58.29"
