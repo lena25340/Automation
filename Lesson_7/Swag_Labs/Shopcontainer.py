@@ -3,8 +3,6 @@ from selenium.webdriver.common.by import By
 class ShopContainer:
     def __init__(self,browser):
         self.browser = browser
-    def __init__(self, driver):
-        self.browser = driver
 
     def checkout (self):
         self.check = (By.ID,"checkout")
@@ -22,6 +20,5 @@ class ShopContainer:
         total_price = self.browser.find_element(By.CSS_SELECTOR,".summary_total_label")
         total = total_price.text.strip().replace("Total: $", "")
         return total
-
         
-        
+      

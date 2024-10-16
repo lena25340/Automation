@@ -1,10 +1,11 @@
+from selenium.webdriver.common.by import By
 class AuthPage:
     def __init__(self, driver):
         self.browser = driver
         
         self.browser.get("https://www.saucedemo.com")
 
-    def login(self):
+    def regisration_fieds(self):
         self._name = (By.ID, "user-name")
         self._pass = (By.ID, "password")
         self._log_button = (By.ID, "login-button")
