@@ -2,7 +2,7 @@ from selenium.webdriver.common.by import By
 
 class ShopContainer:
     def __init__(self,browser):
-        self.browser = browser
+        self.browser = browser 
 
     def checkout (self):
         self.check = (By.ID,"checkout")
