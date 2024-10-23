@@ -45,17 +45,17 @@ class Company:
         resp.raise_for_status() 
         return resp
     
-    def add_new_employee(self, new_id, name, last_name, email="test@test.ru", phone="89999999999", birthdate="2024-08-13T14:05:19.766Z"):
+    def create_employee(self, firstName, lastName, middleName, companyId, email, url, phone, birthdate, isActive):
         employee = {
-            "firstName": name,
-            "lastName": last_name,
-            "middleName": "-",
-            "companyId": new_id,
+            "firstName": firstName,
+            "lastName": lastName,
+            "middleName": middleName,
+            "companyId": companyId,
             "email": email,
-            "url": "string",
+            "url": url,
             "phone": phone,
             "birthdate": birthdate,
-            "isActive": True
+            "isActive": isActive
         }
 
         BASE_HEADERS = {
@@ -65,11 +65,11 @@ class Company:
         resp.raise_for_status()  
         return resp  
     
-    def update_employee_info(self, id_employee, last_name, email):
+    def update_employee_info(self, isActive, last_name, email):
         user_info = {
             "lastName": last_name,
             "email": email,
-            "isActive": True
+            "isActive": isActive
         }
 
         BASE_HEADERS = {

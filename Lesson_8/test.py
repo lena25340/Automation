@@ -9,7 +9,7 @@ base_url = "https://ru.yougile.com"
 def test_add_project():
     yougile = Yougile(
         "grishinaalyon4@yandex.ru", "pJc-NyT-bwe-v3D", "28ebd54f-0600-43ad-89b6-0c1703abb490"
-        )
+    )
     project_data = {
         "ead29fe7-a001-40ec-823e-4b3d0296eb70": "admin"
     }
