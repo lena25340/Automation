@@ -1,0 +1,6 @@
+[
+  "kptest_tack1.py::test_data_types_form",
+  "kptest_tack2.py::test_calculator_form",
+  "kptest_tack2.py::test_fill_form",
+  "kptest_tack3.py::test_shop_form"
+]
