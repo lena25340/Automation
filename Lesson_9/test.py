@@ -1,55 +1,116 @@
-from lesson_9.empl import Company
-from lesson_9.EmplTable import EmplTable
+import os
+from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String
+from sqlalchemy.orm import sessionmaker
 import pytest
 
-api = Company("https://x-clients-be.onrender.com")
-db = EmplTable("postgresql+psycopg2://x_clients_user:95PM5lQE0NfzJWDQmLjbZ45ewrz1fLYa@dpg-cqsr9ulumphs73c2q40g-a.frankfurt-postgres.render.com/x_clients_db_fxd0")
 
-def setup_module(module):
-    db.create_table()
-    db.delete_all_employees()  # Очищаем таблицу сотрудников перед тестами
+@pytest.fixture(scope="module")
+def engine():
 
-def teardown_module(module):
-    db.dispose()  # Используем метод dispose()
+    db_url = f"postgresql://postgres:SCRAM-SHA-256$4096:y/z3rpDNeDMInLXAuKkaTw==$BnnG1sQLNqrynrw+w/KuPZtjYVR1yFmldgS0XKmJ/Fc=:Q0407tIb82lTddSm+aELJlyOC4KYGGsGI5Np4XuWLp8@localhost:5432/python_lesson9"
+    return create_engine(db_url)
 
-def test_create_and_get_employee():
-    name = "SkyPro"
-    descr = "testing"
-    company = api.create_company(name, descr)
-    new_company_id = company["id"]
 
-    len_before = len(db.get_employees())
+@pytest.fixture
+def connection(engine):
+    conn = engine.connect()
+    yield conn
+    conn.close()
 
-    new_employee_id = db.insert_employee("Mike", "Sorreto", "+123456789", new_company_id).inserted_primary_key[0]
 
-    len_after = len(db.get_employees())
+@pytest.fixture
+def session(connection):
+    Session = sessionmaker(bind=connection)
+    sess = Session()
+    try:
+        yield sess
+    finally:
+        sess.close()
 
-    assert len_after - len_before == 1
 
-    employee_list = api.get_list_employee(new_company_id)
-    assert any(employee["firstName"] == "Mike" and employee["lastName"] == "Sorreto" for employee in employee_list)
+def test_add_subject(session):
+    subject_table = Table(
+        'subject',
+        MetaData(),
+        Column('subject_id', Integer, primary_key=True),
+        Column('subject_title', String),
+    )
 
-def test_update_employee():
-    employees = db.get_employees()
-    assert len(employees) > 0
+    new_subject = {'subject_id': 16, 'subject_title': 'Art'}
+    insert_stmt = subject_table.ins
+    ert().values(**new_subject)
+    session.execute(insert_stmt)
+    session.commit()
 
-    employee_id = employees[0]["id"]
-    db.update_employee(employee_id, "Jane", "Doe", "Middle", "+987654321", "jane.doe@example.com", "http://example.com")
+    result = (
+        session.query(subject_table)
+        .filter_by(subject_id=new_subject['subject_id'])
+        .first()
+    )
+    assert result.subject_title == new_subject['subject_title']
 
-    updated_employee = db.get_employee_by_id(employee_id)  # Получаем обновленного сотрудника напрямую
-    assert updated_employee["first_name"] == "Jane"
-    assert updated_employee["last_name"] == "Doe"
-    assert updated_employee["middle_name"] == "Middle"
-    assert updated_employee["phone"] == "+987654321"
-    assert updated_employee["email"] == "jane.doe@example.com"
-    assert updated_employee["avatar_url"] == "http://example.com"
-    assert updated_employee["is_active"] == True  # Это поле не должно измениться
-def test_delete_all_employees():
-    employees = db.get_employees()
+    delete_stmt = subject_table.delete().where(
+        subject_table.c.subject_id == new_subject['subject_id']
+    )
+    session.execute(delete_stmt)
+    session.commit()
 
-    for employee in employees:
-        employee_id = employee["id"]
-        db.delete_employee(employee_id)
 
-    employees_after_deletion = db.get_employees()
-    assert len(employees_after_deletion) == 0
+def test_update_student(session):
+    student_table = Table(
+        'student',
+        MetaData(),
+        Column('user_id', Integer, primary_key=True),
+        Column('level', String),
+        Column('education_form', String),
+        Column('subject_id', Integer),
+    )
+
+    update_data = {'user_id': 11548, 'level': 'Advanced'}
+    update_stmt = (
+        student_table.update()
+        .where(student_table.c.user_id == update_data['user_id'])
+        .values(level=update_data['level'])
+    )
+    session.execute(update_stmt)
+    session.commit()
+
+    result = (
+        session.query(student_table)
+        .filter_by(user_id=update_data['user_id'])
+        .first()
+    )
+    assert result.level == update_data['level']
+
+    rollback_data = {'level': 'Upper-Intermediate'}
+    rollback_stmt = (
+        student_table.update()
+        .where(student_table.c.user_id == update_data['user_id'])
+        .values(**rollback_data)
+    )
+    session.execute(rollback_stmt)
+    session.commit()
+
+
+def test_delete_teacher(session):
+    teacher_table = Table(
+        'teacher',
+        MetaData(),
+        Column('teacher_id', Integer, primary_key=True),
+        Column('email', String),
+        Column('group_id', Integer),
+    )
+
+    delete_data = {"teacher_id": 29971}
+    delete_stmt = teacher_table.delete().where(
+        teacher_table.c.teacher_id == delete_data["teacher_id"]
+    )
+    session.execute(delete_stmt)
+    session.commit()
+
+    result = (
+        session.query(teacher_table)
+        .filter_by(teacher_id=delete_data['teacher_id'])
+        .all()
+    )
+    assert len(result) == 0
