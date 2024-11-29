@@ -7,12 +7,13 @@ base_url = "https://ru.yougile.com"
 
 @pytest.mark.positive_test
 def test_add_project():
-    yougile = Yougile(
-        "grishinaalyon4@yandex.ru", "pJc-NyT-bwe-v3D", "28ebd54f-0600-43ad-89b6-0c1703abb490"
-    )
-    project_data = {
-        "ead29fe7-a001-40ec-823e-4b3d0296eb70": "admin"
-    }
+    yougile = Yougile{
+        base_url  = f"{base_url}yougile.com"
+        project_data= {
+            "ead29fe7-a001-40ec-823e-4b3d0296eb70": "admin","grishinaalyon4@yandex.ru", "pJc-NyT-bwe-v3D", "28ebd54f-0600-43ad-89b6-0c1703abb490
+        }
+         }
+     
     response = yougile.create_project("Yogatime", project_data)
 
     assert "content" in response, "Expected 'content' in the response"
@@ -41,7 +42,7 @@ def test_update_project():
     project_data = {
         "ead29fe7-a001-40ec-823e-4b3d0296eb70": "admin"
     }
-    create_response = yougile.create_project(project_name, project_data)
+    create_response = Yougile.create_project(project_name, project_data)
 
     assert "content" in create_response, "Expected 'content' in the create response"
     assert len(create_response["content"]) > 0, "Expected content to have at least one project"
@@ -55,6 +56,22 @@ def test_update_project():
     assert "id" in update_response, "Expected project ID in the update response"
     assert update_response.get("id") == project_id, "Expected project ID to match"
 
+@pytest.fixture
+def delete_utility_project(project_api: Yougile):
+    with allure.step('Очистить тестовые данные - удалить проект'):
+        data = {'project_id':''}
+        yield data
+        
+    project_api.delete_project(data['project_id'])
+        
+@pytest.fixture
+def delete_utility_board(board_api: BoardApi):
+    with allure.step('Очистить тестовые данные - удалить доску'):
+        data = {
+            'first_board_id':'',
+            'second_board_id':''
+            }
+        yield data
 
 @pytest.mark.positive_test
 def test_get_project_by_id():
